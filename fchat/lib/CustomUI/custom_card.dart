@@ -1,0 +1,68 @@
+import 'package:fchat/Model/chat_model.dart';
+import 'package:fchat/Screens/individual_chat_page.dart';
+import 'package:flutter/material.dart';
+
+class CustomCard extends StatelessWidget {
+  const CustomCard({Key? key, required this.chatModel, this.sourceChat})
+      : super(key: key);
+  final ChatModel chatModel;
+  final ChatModel? sourceChat;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => IndividualChatPage(
+              chatModel: chatModel,
+              sourceChat: sourceChat,
+            ),
+          ),
+        );
+      },
+      child: Column(
+        children: [
+          ListTile(
+            leading: CircleAvatar(
+              radius: 30,
+              backgroundColor: Colors.blueGrey[200],
+              child: Icon(
+                chatModel.isGroup! ? Icons.groups : Icons.person,
+                color: Colors.white,
+                size: 37,
+              ),
+            ),
+            trailing: Text(chatModel.time!),
+            title: Text(
+              chatModel.name!,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            subtitle: Row(
+              children: [
+                Icon(Icons.done_all),
+                SizedBox(width: 4),
+                Text(
+                  chatModel.currentMessage!,
+                  style: TextStyle(
+                    fontSize: 13,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 20, left: 80),
+            child: Divider(
+              thickness: 1,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
